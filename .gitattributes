@@ -1,0 +1,7 @@
+# Explicitly declare text files we want to always be normalized and converted 
+# to native line endings on checkout.
+*.md         text
+*.pm         text
+*.pl         text
+*.t          text
+*.tt2        text
