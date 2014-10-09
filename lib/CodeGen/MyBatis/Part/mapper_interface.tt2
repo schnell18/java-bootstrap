@@ -1,9 +1,0 @@
-[%- SET mapper = comp.get_part("mapper_interface") -%]
-[%- SET model  = comp.get_part("model_class") -%]
-package [% mapper.package_name %];
-
-import [% model.q_class_name %];
-
-public interface [% mapper.class_name %] {
-    [% model.class_name %] select[% model.class_name %](Long id);
-}

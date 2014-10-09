@@ -2,10 +2,11 @@
 
 use strict;
 use warnings;
-use File::Spec::Functions qw(catdir);
 use Getopt::Long;
+use CodeGen::Version;
 use CodeGen::MyBatis::Generator::MyBatis;
 
+my $version = $CodeGen::Version::VERSION;
 my @args = @ARGV;
 
 my (
@@ -38,7 +39,6 @@ if (   $entity_spec_file
 
 my $mybatis = CodeGen::MyBatis::Generator::MyBatis->get_instance({
     base_dir           => '.',
-    include_path       => catdir($Bin, 'templates'),
     spec_file          => $entity_spec_file,
     model_sub_package  => $model_sub_package,
     mapper_sub_package => $mapper_sub_package,
@@ -56,7 +56,7 @@ if ($gen_files && @$gen_files) {
 sub usage {
 
     print <<EOF;
-MyBatis Bootstrap Tool -- Add data model class and unit test
+MyBatis Bootstrap Tool -- Add data model and unit test ($version)
 Usage:
   mybatis-add-model.pl --spec-file <entity attributes>
                        [--model-sub-pkg <sub package for model>]

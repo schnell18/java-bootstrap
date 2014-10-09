@@ -335,12 +335,10 @@ sub get_default_type {
 sub get_default_template {
     my ($self) = @_;
 
-    #TODO: Get 2 entry of package name
     my $template = $self->_property("_default_template");
     if (!$template) {
         my $prefix_dir = get_template_prefix_dir(ref($self));
-        $template = to_snake_case($self->_get_class_base_name());
-        $template .= ".tt2";
+        $template = $self->_get_class_base_name() . ".tt2";
         $template = catfile($prefix_dir, $template);
         $self->_property("_default_template", $template);
     }

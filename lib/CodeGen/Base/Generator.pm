@@ -2,9 +2,10 @@ package CodeGen::Base::Generator;
 
 use strict;
 use warnings;
-use CodeGen::Constants qw(:all);
 use Template;
 use Template::Constants qw(:debug);
+use CodeGen::Constants qw(:all);
+use CodeGen::Util qw(get_template_include_dir);
 
 sub get_instance {
     my ($class) = shift;
@@ -17,7 +18,7 @@ sub get_instance {
 
     my $tt = Template->new({
         DEBUG        => DEBUG_UNDEF,
-        INCLUDE_PATH => $include_path,
+        INCLUDE_PATH => get_template_include_dir(),
         OUTPUT_PATH  => $output_path,
         EVAL_PERL    => 1,
     }) or die Template->error(), "\n"; #TODO: fix die() here

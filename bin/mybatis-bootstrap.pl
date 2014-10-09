@@ -3,9 +3,9 @@
 use strict;
 use warnings;
 use Getopt::Long;
-use File::Spec::Functions qw(catdir);
 use CodeGen::MyBatis::Generator::MyBatis;
 
+my $version = $CodeGen::Version::VERSION;
 my @args = @ARGV;
 
 my (
@@ -15,7 +15,7 @@ my (
     $mapper_sub_package,
     $entity_spec_file,
     $help,
-    $version
+    $mybatis_version
 );
 GetOptions(
     "project-dir=s"     => \$project_dir,
@@ -23,7 +23,7 @@ GetOptions(
     "model-sub-pkg=s"   => \$model_sub_package,
     "mapper-sub-pkg=s"  => \$mapper_sub_package,
     "spec-file=s"       => \$entity_spec_file,
-    "mybatis-version=s" => \$version,
+    "mybatis-version=s" => \$mybatis_version,
     "help"              => \$help,
 ) or do {
     usage();
@@ -50,14 +50,13 @@ if (   $entity_spec_file
 
 my $mybatis = CodeGen::MyBatis::Generator::MyBatis->get_instance({
     base_dir           => '.',
-    include_path       => catdir($Bin, 'templates'),
     spec_file          => $entity_spec_file,
     bootstrap          => 1,
     project_dir        => $project_dir,
     root_package       => $root_package,
     model_sub_package  => $model_sub_package,
     mapper_sub_package => $mapper_sub_package,
-    mybatis_ver        => $version,
+    mybatis_ver        => $mybatis_version,
 });
 
 $mybatis->generate();
@@ -72,7 +71,7 @@ if ($gen_files && @$gen_files) {
 sub usage {
 
     print <<EOF;
-MyBatis Bootstrap Tool -- initialize project layout
+MyBatis Bootstrap Tool -- initialize project layout ($version)
 Usage:
   mybatis-bootstrap.pl --project-dir <project root directory>
                        --root-package <root package>

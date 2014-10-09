@@ -1,4 +1,5 @@
 # Introduction
+[![Build Status](https://travis-ci.org/schnell18/java-bootstrap.svg?branch=master)](https://travis-ci.org/schnell18/java-bootstrap)
 This project provides a framework to develop bootstrap and incremental
 tools for Java project using various technologies such as:
 
@@ -7,16 +8,17 @@ tools for Java project using various technologies such as:
 
 The purpose of this project to make people who are comfortable to use
 command line to jump start a Java project without typical copy-paste and
-ammend approach. The design philosophy centers on:
+ammend approach which also tends to duplicate the error of previous
+project. The design philosophy centers on:
 
+- minimalism approach
 - start from scratch
 - work out-of-box
-- minimalism approach
 
-The generated artifacts should be complete with dependencies resolved
-and the programs should compile and even pass the unit test.
-Anything generated is absolutely necessary. User does not have to delete
-useless files as they bootstrap a project by copying a similar one.
+The generated artifacts are complete with dependencies resolved and the
+programs should compile and even pass the unit test. Anything generated
+is absolutely necessary. User does not have to delete useless files as
+they bootstrap a project by copying a similar one.
 
 # Usage
 ## mybatis-bootstrap
@@ -93,6 +95,17 @@ Typical usage example:
     A    src/test/java/org/xyz/mybatisdemo/server/mapper/VersionMapperTest.java
     M    src/main/resources/org/xyz/mybatisdemo/mybatisConfig.xml
     M    src/test/resources/org/xyz/mybatisdemo/mybatisConfig_ut.xml
+
+
+# Build and install
+This project use ExtUtils::MakeMaker to build and install. The execute
+script will be installed into the bin directory of Perl installation.
+The command to build and install this tool is:
+
+    perl Makefile.PL
+    make
+    make test
+    make install
 
 
 # TODOs:

@@ -67,12 +67,12 @@ $act = $obj->get_basename();
 is($act, $exp, "base name test 1");
 
 # test 4: default template name
-$exp = "MyBatis/db_config_properties.tt2";
+$exp = "CodeGen/MyBatis/Part/DbConfigProperties.tt2";
 $act = $obj->get_default_template();
 is($act, $exp, "default template test 1");
 
 # test 5: template name
-$exp = "MyBatis/db_config_properties.tt2";
+$exp = "CodeGen/MyBatis/Part/DbConfigProperties.tt2";
 $act = $obj->get_template();
 is($act, $exp, "template test 1");
 
@@ -99,12 +99,12 @@ $act = $obj->get_basename();
 is($act, $exp, "base name test 2");
 
 # test 4: default template name
-$exp = "MyBatis/mybatis_config_xml.tt2";
+$exp = "CodeGen/MyBatis/Part/MybatisConfigXml.tt2";
 $act = $obj->get_default_template();
 is($act, $exp, "default template test 2");
 
 # test 5: template name
-$exp = "MyBatis/mybatis_config_xml.tt2";
+$exp = "CodeGen/MyBatis/Part/MybatisConfigXml.tt2";
 $act = $obj->get_template();
 is($act, $exp, "template test 2");
 
@@ -135,12 +135,12 @@ $act = $obj->get_basename();
 is($act, $exp, "base name test 3");
 
 # test 4: default template name
-$exp = "MyBatis/mapper_unit_test_class.tt2";
+$exp = "CodeGen/MyBatis/Part/MapperUnitTestClass.tt2";
 $act = $obj->get_default_template();
 is($act, $exp, "default template test 3");
 
 # test 5: template name
-$exp = "MyBatis/mapper_unit_test_class.tt2";
+$exp = "CodeGen/MyBatis/Part/MapperUnitTestClass.tt2";
 $act = $obj->get_template();
 is($act, $exp, "template test 3");
 
@@ -177,12 +177,12 @@ $act = $obj->get_basename();
 is($act, $exp, "base name test 4");
 
 # test 4: default template name
-$exp = "MyBatis/git_ignore.tt2";
+$exp = "CodeGen/MyBatis/Part/GitIgnore.tt2";
 $act = $obj->get_default_template();
 is($act, $exp, "default template test 4");
 
 # test 5: template name
-$exp = "MyBatis/git_ignore.tt2";
+$exp = "CodeGen/MyBatis/Part/GitIgnore.tt2";
 $act = $obj->get_template();
 is($act, $exp, "template test 4");
 

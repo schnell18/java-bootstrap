@@ -16,6 +16,7 @@ our @EXPORT_OK = qw (
     find_append_pos_for
     to_snake_case
     get_template_prefix_dir
+    get_template_include_dir
 );
 
 sub get_specs_from_file {
@@ -126,13 +127,21 @@ sub create_project_layout {
     }
 }
 
+sub get_template_include_dir {
+
+    my $fp = __FILE__;
+    my @parts = split(/::/, __PACKAGE__);
+    my $pkg_file = join('/', @parts) . '.pm';
+    return substr($fp, 0, length($fp) - length($pkg_file));
+}
+
 sub get_template_prefix_dir {
     my ($pkg) = @_;
 
     my @parts = split(/::/, $pkg);
     my $len = scalar(@parts);
-    return "" if ($len < 4);
-    my @subs = @parts[1 .. ($len - 3)];
+    return "" if ($len < 2);
+    my @subs = @parts[0 .. ($len - 2)];
     return catdir(@subs);
 }
 

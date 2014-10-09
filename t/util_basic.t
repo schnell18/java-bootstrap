@@ -38,18 +38,18 @@ $act = to_snake_case("dbConfigProperties");
 is($act, $exp, "camel case to snake case test 3");
 
 # test get template prefix dir
-$exp = "GWT/UiBinder";
+$exp = "CodeGen/GWT/UiBinder/Part";
 $act = get_template_prefix_dir("CodeGen::GWT::UiBinder::Part::Gradle");
 is($act, $exp, "get_template_prefix_dir test 1");
 
 # test get template prefix dir
-$exp = "MyBatis";
+$exp = "CodeGen/MyBatis/Part";
 $act = get_template_prefix_dir("CodeGen::MyBatis::Part::Gradle");
-is($act, $exp, "get_template_prefix_dir test 1");
+is($act, $exp, "get_template_prefix_dir test 2");
 
 # test get template prefix dir
 $exp = "";
-$act = get_template_prefix_dir("CodeGen::MyBatis::Part");
-is($act, $exp, "get_template_prefix_dir test 2");
+$act = get_template_prefix_dir("CodeGen");
+is($act, $exp, "get_template_prefix_dir test 3");
 
 # vim: set ai nu nobk expandtab sw=4 ts=4 tw=72 syntax=perl :
