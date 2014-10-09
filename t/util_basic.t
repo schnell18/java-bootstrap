@@ -7,10 +7,10 @@ use Test::More qw(no_plan);
 BEGIN {
     if (-d 't') {
         # running from the base directory
-        unshift @INC, '.';
+        unshift @INC, 'lib';
     }   
     else {
-        unshift @INC, '..';
+        unshift @INC, '../lib';
     }   
 }
 

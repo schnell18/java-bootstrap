@@ -4,8 +4,6 @@ use strict;
 use warnings;
 use Getopt::Long;
 use File::Spec::Functions qw(catdir);
-use FindBin qw($Bin);
-use lib qq($Bin);
 use CodeGen::MyBatis::Generator::MyBatis;
 
 my @args = @ARGV;

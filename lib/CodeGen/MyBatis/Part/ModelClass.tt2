@@ -1,0 +1,40 @@
+[%- SET attributes = comp.attributes -%]
+[%- SET model      = comp.get_part("model_class") -%]
+package [% model.package_name %];
+
+[% PERL -%]
+   my $attributes = $stash->get('attributes');
+   my @dates = grep { $_->[1] eq 'Date' } @$attributes;
+   $stash->set('hasDate', scalar(@dates));
+[% END -%]
+[% IF hasDate -%]
+import java.util.Date;
+[% END -%]
+
+public class [% model.class_name %] {
+[% FOREACH a IN attributes -%]
+    [%- SET type = a.1 -%]
+    [%- SET attr = a.0 -%]
+    private [% type %] [% attr %];
+
+[% END -%]
+    public [% model.class_name %]() {
+    }
+[% FOREACH a IN attributes -%]
+    [%- SET type = a.1  -%]
+    [%- SET attr = a.0  -%]
+    [%- IF type != 'boolean' -%]
+        [%- SET accessor = 'get' -%]
+    [%- ELSE -%]
+        [%- SET accessor = 'is' -%]
+    [%- END -%]
+
+    public [% type %] [% accessor %][% attr.ucfirst %]() {
+        return [% attr %];
+    }
+
+    public void set[% attr.ucfirst %]([% type %] [% attr %]) {
+        this.[% attr %] = [% attr %];
+    }
+[% END -%]
+}

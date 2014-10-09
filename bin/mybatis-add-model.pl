@@ -3,8 +3,6 @@
 use strict;
 use warnings;
 use File::Spec::Functions qw(catdir);
-use FindBin qw($Bin);
-use lib qq($Bin);
 use Getopt::Long;
 use CodeGen::MyBatis::Generator::MyBatis;
 

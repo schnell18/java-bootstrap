@@ -1,0 +1,4 @@
+driver=org.sqlite.JDBC
+url=jdbc:sqlite:/Volumes/data/work/java/mybatis/cvc.db
+username=abc
+password=abc
