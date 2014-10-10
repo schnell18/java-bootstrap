@@ -58,9 +58,9 @@ sub get_root_package {
 sub get_base_dir {
     my ($self) = @_;
     
-    my $generator = $self->get_generator();
-    return unless $generator;
-    return $generator->get_base_dir();
+    my $project = $self->get_project();
+    return unless $project;
+    return $project->get_base_dir();
 }
 
 sub add_part {

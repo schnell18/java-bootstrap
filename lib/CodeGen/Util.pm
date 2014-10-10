@@ -56,6 +56,7 @@ sub get_specs_from_file {
     return \%entities;
 }
 
+#TODO: fix here to respect layout
 sub find_classpath_resource {
     my ($base_dir, $res_file_pat) = @_;
 
@@ -70,7 +71,7 @@ sub find_classpath_resource {
     );
 
     return "" unless $res_file;
-    my $prefix_len = length('./src/main/resources/');
+    my $prefix_len = length("$base_dir/src/main/resources/");
     return (
         substr($res_file, $prefix_len),
         substr(dirname($res_file), $prefix_len)
@@ -108,7 +109,7 @@ sub to_snake_case {
 
 #TODO: fix this method to respect project directory layout
 sub create_project_layout {
-    my ($project_dir, $root_pkg_path) = @_;
+    my ($base_dir, $project_dir, $root_pkg_path) = @_;
 
     my @secs  = qw (main test);
     my @types = qw (java resources);
@@ -116,6 +117,7 @@ sub create_project_layout {
     foreach my $sec (@secs) {
         foreach my $type (@types) {
             my $dir = catdir(
+                $base_dir,
                 $project_dir,
                 "src",
                 $sec,

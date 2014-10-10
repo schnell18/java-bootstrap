@@ -6,7 +6,6 @@ use CodeGen::Constants qw(:all);
 use CodeGen::Base::Part;
 use CodeGen::Util qw(
     find_append_pos_for
-    find_classpath_resource
 );
 
 our @ISA = qw(CodeGen::Base::Part);
@@ -25,8 +24,7 @@ sub add_mapper_inclusion {
 
     $self->_load_file();
 
-
-    my $file           = $self->get_output();
+    my $file           = $self->get_abs_output();
     my $content        = $self->{__file_content__};
     my $parent         = $self->get_parent();
     my $mapper_xml_obj = $parent->get_part(MYBATIS_MAPPER_XML);
@@ -70,7 +68,7 @@ sub add_type_alias {
 
     $self->_load_file();
 
-    my $file            = $self->get_output();
+    my $file            = $self->get_abs_output();
     my $content         = $self->{__file_content__};
     my $parent          = $self->get_parent();
     my $model_class_obj = $parent->get_part(MYBATIS_MODEL_CLASS);
@@ -156,7 +154,7 @@ EOF
 sub _load_file {
     my ($self) = @_;
 
-    my $file = $self->get_output();
+    my $file = $self->get_abs_output();
     my @content = ();
     my $fh;
     open($fh, "<", $file) or die "Unable to open $file for read!\n";

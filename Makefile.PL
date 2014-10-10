@@ -4,7 +4,7 @@ use warnings FATAL => 'all';
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME             => 'CodeGen::MyBatis::Generator::MyBatis',
+    NAME             => 'CodeGen',
     AUTHOR           => q{Justin Zhang <schnell18@gmail.com>},
     VERSION_FROM     => 'lib/CodeGen/Version.pm',
     ABSTRACT         => 'Framework and tools to bootstrap Java project',
@@ -22,5 +22,5 @@ WriteMakefile(
         'Template'  => 2.22,
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean => { FILES => 'App-ProjectBootStrap-*' },
+    clean => { FILES => 'CodeGen-*' },
 );

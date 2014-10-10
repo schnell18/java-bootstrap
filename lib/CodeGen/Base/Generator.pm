@@ -2,6 +2,7 @@ package CodeGen::Base::Generator;
 
 use strict;
 use warnings;
+use File::Spec::Functions qw(catdir);
 use Template;
 use Template::Constants qw(:debug);
 use CodeGen::Constants qw(:all);
@@ -13,12 +14,17 @@ sub get_instance {
     my $config = shift;
     return undef unless $config && ref($config) eq 'HASH';
 
-    my $include_path   = $config->{include_path};
+    my $include_path   = get_template_include_dir(),
+    my $bootstrap      = $config->{bootstrap};
     my $output_path    = $config->{base_dir};
+    if ($bootstrap) {
+        my $project_dir = $config->{project_dir};
+        $output_path = catdir($output_path, $project_dir);
+    }
 
     my $tt = Template->new({
         DEBUG        => DEBUG_UNDEF,
-        INCLUDE_PATH => get_template_include_dir(),
+        INCLUDE_PATH => $include_path,
         OUTPUT_PATH  => $output_path,
         EVAL_PERL    => 1,
     }) or die Template->error(), "\n"; #TODO: fix die() here
@@ -118,6 +124,9 @@ sub get_project {
 sub set_project {
     my ($self, $project) = @_;
 
+    if ($project) {
+        $project->set_base_dir($self->get_base_dir());
+    }
     return $self->_property("project", $project);
 }
 
@@ -141,12 +150,12 @@ sub _generate_parts {
 sub _generate_part {
     my ($self, $stash, $part) = @_;
 
-    my $output = $part->get_output();
+    my $fp = catdir($self->get_base_dir(), $part->get_output());
     my $action = $part->get_exists_action();
-    if (-f $output && $action == EXISTS_UPDATE) {
+    if (-f $fp && $action == EXISTS_UPDATE) {
         return $part->update();
     }   
-    elsif (-f $output && $action == EXISTS_SKIP) {
+    elsif (-f $fp && $action == EXISTS_SKIP) {
         return RESULT_SKIP_EXISTING;
     }   
 
@@ -157,7 +166,7 @@ sub _generate_part {
     $tt->process(
         $part->get_template(),
         $stash,
-        $output
+        $part->get_output()
     ) or return (ERR_TT_FAILURE, $tt->error());
     return RESULT_GENERATED;
 }

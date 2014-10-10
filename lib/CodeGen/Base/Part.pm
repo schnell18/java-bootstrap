@@ -34,6 +34,19 @@ sub new {
     return $self;
 }
 
+# get absolute path of output
+sub get_abs_output {
+    my ($self) = @_;
+
+    my $parent = $self->get_parent();
+    if ($parent) {
+        return catdir($parent->get_base_dir(), $self->get_output());
+    }
+    else {
+        return $self->get_output();
+    }
+}
+
 sub get_output {
     my ($self) = @_;
 

@@ -89,10 +89,10 @@ sub pre_generate {
 
     }
     $self->set_project($project);
-    if ($self->is_bootstrap()) {
-        create_project_layout($self->get_project_dir(), $root_pkg_path);
-        chdir($self->get_project_dir());
-    }
+    #TODO: remove dead code here later
+    # if ($self->is_bootstrap()) {
+    #     create_project_layout($self->get_base_dir(), $root_pkg_path);
+    # }
 }
 
 sub get_entity_spec_file {

@@ -1,0 +1,13 @@
+Product:
+id            Long
+name          String
+code          String
+addon         boolean
+vendor        String
+releaseDate   Date
+
+Version:
+id            Long
+name          String
+code          String
+seq           int
