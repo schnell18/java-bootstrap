@@ -1,0 +1,28 @@
+# temporary and log files
+*~
+*.swp
+*.swo
+*.log
+logs
+
+# IDE project meta directories and files
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings
+.idea
+bin
+
+# build tool meta directories and files
+.gradle
+build
+local.properties
+
+# ctags tags file
+tags
+
+# GWT compile output directory
+war
+

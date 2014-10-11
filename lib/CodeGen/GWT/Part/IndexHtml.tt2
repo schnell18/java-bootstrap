@@ -1,0 +1,7 @@
+<!doctype html>
+<html>
+<head>
+  <!-- forward to the GWT Host html -->
+  <meta http-equiv="refresh" content="0;url=[% project.gwt_module.lower %]/[% project.gwt_module %].html">
+</head>
+</html>

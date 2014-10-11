@@ -1,0 +1,73 @@
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'war'
+
+buildscript {
+    repositories {
+        maven {
+            url 'https://github.com/steffenschaefer/gwt-gradle-plugin/raw/maven-repo/'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.4'
+    }
+}
+
+apply plugin: 'gwt'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+
+    providedCompile 'com.google.gwt:gwt-dev:[% project.gwt_version %]'
+    providedCompile 'com.google.gwt:gwt-user:[% project.gwt_version %]'
+
+    testCompile 'junit:junit:4.9'
+
+}
+
+task gwtDevDebug(type: de.richsource.gradle.plugins.gwt.GwtDev) {
+    description 'Runs the GWT development mode w/ JPDA debugging'
+    group 'GWT'
+    setDebug(true)
+    setWar(file('build/war'))
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+war {
+    baseName = '[% project.gwt_module %]'
+
+    compileJava {
+        options.encoding = "UTF-8"
+    }
+
+}
+
+gwt {
+    gwtVersion = '[% project.gwt_version %]'
+    minHeapSize = '512M'
+    maxHeapSize = '1024M'
+    logLevel = 'INFO'
+    modules '[% project.q_module_name %]'
+    devModules '[% project.q_dev_module_name %]'
+    devWar = file('build/war')
+
+    dev {
+        startupUrl = "[% project.gwt_module.lower %]/[% project.gwt_module %].html"
+    }
+
+    compiler {
+        enableClosureCompiler = true;
+        disableClassMetadata = true;
+        disableCastChecking = true;
+    }
+}
+
+/* vim: set ai nu nobk expandtab sw=4 ts=4 tw=72 syntax=groovy : */

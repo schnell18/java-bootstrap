@@ -6,7 +6,7 @@ use Carp;
 use File::Basename;
 use File::Path qw(make_path);
 use File::Spec::Functions qw(catdir catfile);
-use CodeGen::Constants qw(:results :misc);
+use CodeGen::Constants qw(:results :misc :src_types);
 use CodeGen::Util qw(
     to_snake_case
     get_template_prefix_dir
@@ -318,10 +318,10 @@ sub get_default_purpose {
     # - otherwise, main
     my $base_name = $self->_get_class_base_name();
     if ($base_name =~ /TestClass$/) {
-        return 'test';
+        return SRC_TEST;
     }
     else {
-        return 'main';
+        return SRC_MAIN;
     }
 }
 
@@ -335,13 +335,13 @@ sub get_default_type {
     # - otherwise, no default type is assigned (as indicated by 'FIXME')
     my $base_name = $self->_get_class_base_name();
     if ($base_name =~ /Class$|Interface$/) {
-        return 'java';
+        return SRC_TYPE_JAVA;
     }
     elsif ($base_name =~ /Properties$|Xml$/) {
-        return 'resources';
+        return SRC_TYPE_RESOURCE;
     }
     else {
-        return 'FIXME';
+        return SRC_TYPE_UNKNOWN;
     }
 }
 
