@@ -87,7 +87,7 @@ sub package_name {
     return sprintf(
         "%s.%s",
         $self->get_root_package(),
-        $self->get_sub_package(),
+        $self->get_sub_package() || "",
     );
 }
 
@@ -254,6 +254,16 @@ sub set_parent {
     return $self->_property("parent", $parent);
 }
 
+sub get_web_sub_dir {
+    return shift->_property("web_sub_dir");
+}
+
+sub set_web_sub_dir {
+    my ($self, $web_sub_dir) = @_;
+
+    return $self->_property("web_sub_dir", $web_sub_dir);
+}
+
 sub get_sequence {
     return shift->_property("sequence");
 }
@@ -271,10 +281,23 @@ sub get_default_output {
         return $self->get_basename();
     }
     else {
-       return catdir(
-            $self->get_dir_prefix(),
-            $self->classpath_entry()
-        );
+       my $type = $self->get_type();
+       if ($type eq SRC_TYPE_JAVA || $type eq SRC_TYPE_RESOURCE) {
+           return catdir(
+                $self->get_dir_prefix(),
+                $self->classpath_entry()
+           );
+       }
+       elsif ($type eq SRC_TYPE_WEB) {
+           return catdir(
+                $self->get_dir_prefix(),
+                $self->get_web_sub_dir() || "",
+                $self->get_basename()
+           );
+       }
+       else {
+           return undef;
+       }
     }
 }
 
@@ -300,6 +323,9 @@ sub get_default_basename {
     }
     elsif ($base_name =~ /(\w+)Xml/) {
         return "\l${1}${suffix}.xml";
+    }
+    elsif ($base_name =~ /(\w+)Html/) {
+        return "\l${1}${suffix}.html";
     }
     elsif ($base_name =~ /(\w+)Properties/) {
         return "\l${1}${suffix}.properties";
@@ -337,7 +363,7 @@ sub get_default_type {
     if ($base_name =~ /Class$|Interface$/) {
         return SRC_TYPE_JAVA;
     }
-    elsif ($base_name =~ /Properties$|Xml$/) {
+    elsif ($base_name =~ /Properties$|Xml$|Html$|Css$/) {
         return SRC_TYPE_RESOURCE;
     }
     else {

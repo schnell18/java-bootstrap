@@ -11,6 +11,14 @@ use File::Spec::Functions qw(catdir);
 use CodeGen::Constants qw(:all);
 use CodeGen::GWT::Part::GitIgnore;
 use CodeGen::GWT::Part::Gradle;
+use CodeGen::GWT::Part::GwtHostHtml;
+use CodeGen::GWT::Part::GwtModuleClass;
+use CodeGen::GWT::Part::GwtModuleCss;
+use CodeGen::GWT::Part::GwtModuleXml;
+use CodeGen::GWT::Part::GwtDevModuleXml;
+use CodeGen::GWT::Part::IndexHtml;
+use CodeGen::GWT::Part::WebXml;
+
 use CodeGen::Base::Project;
 
 our @ISA = qw(CodeGen::Base::Project);
@@ -24,105 +32,96 @@ sub new {
 
     # git ignore
     $part = CodeGen::GWT::Part::GitIgnore->new($self);
-    $self->set_git_ignore($part);
-    $self->add_part(MYBATIS_GIT_IGNORE, $part);
+    $self->add_part(GWT_GIT_IGNORE, $part);
 
     # gradle build script
     $part = CodeGen::GWT::Part::Gradle->new($self);
-    $self->set_gradle($part);
-    $self->add_part(MYBATIS_GRADLE, $part);
+    $self->add_part(GWT_GRADLE, $part);
 
-    # unit test mybatis config
-    $part = CodeGen::GWT::Part::MybatisConfigXml->new($self);
-    $part->set_suffix('_ut');
-    $part->set_purpose('test');
-    $self->add_part(MYBATIS_MYBATIS_CONFIG_XML_UT, $part);
+    $part = CodeGen::GWT::Part::GwtHostHtml->new($self);
+    $self->add_part(GWT_HOST_HTML, $part);
+
+    $part = CodeGen::GWT::Part::GwtModuleClass->new($self);
+    $self->add_part(GWT_MODULE_CLASS, $part);
+
+    $part = CodeGen::GWT::Part::GwtModuleCss->new($self);
+    $self->add_part(GWT_MODULE_CSS, $part);
+
+    $part = CodeGen::GWT::Part::GwtModuleXml->new($self);
+    # GWT devmode does not seem work with separate xml and Java
+    $self->add_part(GWT_MODULE_XML, $part);
+
+    $part = CodeGen::GWT::Part::GwtDevModuleXml->new($self);
+    $self->add_part(GWT_MODULE_XML_DEV, $part);
+
+    $part = CodeGen::GWT::Part::IndexHtml->new($self);
+    $self->add_part(GWT_INDEX_HTML, $part);
+
+    $part = CodeGen::GWT::Part::WebXml->new($self);
+    $self->add_part(GWT_WEB_XML, $part);
 
     return $self;
 }
 
 sub q_module_name {
     my ($self) = @_;
-    #TODO: implement here later
+
+    return sprintf(
+        "%s.%s",
+        $self->get_root_package(),
+        $self->get_gwt_module()
+    );
 }
 
 sub q_dev_module_name {
     my ($self) = @_;
-    #TODO: implement here later
+
+    return sprintf(
+        "%s.%sDev",
+        $self->get_root_package(),
+        $self->get_gwt_module()
+    );
 }
 
 sub gwt_version {
     my ($self) = @_;
-    #TODO: implement here later
+    return $self->get_gwt_version();
 }
 
 sub gwt_module {
     my ($self) = @_;
-    #TODO: implement here later
+    return $self->get_gwt_module();
 }
 
-sub get_model_sub_package {
+sub get_gwt_version {
     my ($self) = @_;
 
-    my $sub_pkg = $self->_property("model_sub_package"); 
-    return "model" unless $sub_pkg;
-    return $sub_pkg;
-}
-
-sub set_model_sub_package {
-    my ($self, $model_sub_package) = @_;
-
-    return $self->_property("model_sub_package", $model_sub_package);
-}
-
-sub get_mapper_sub_package {
-    my ($self) = @_;
-
-    my $sub_pkg = $self->_property("mapper_sub_package"); 
-    return "mapper" unless $sub_pkg;
-    return $sub_pkg;
-}
-
-sub set_mapper_sub_package {
-    my ($self, $mapper_sub_package) = @_;
-
-    return $self->_property("mapper_sub_package", $mapper_sub_package);
-}
-
-sub get_git_ignore {
-    return shift->_property("git_ignore");
-}
-
-sub set_git_ignore {
-    my ($self, $part) = @_;
-
-    return $self->_property("git_ignore", $part);
-}
-
-sub get_gradle {
-    return shift->_property("gradle");
-}
-
-sub set_gradle {
-    my ($self, $part) = @_;
-
-    return $self->_property("gradle", $part);
-}
-
-sub get_mybatis_version {
-    my ($self) = @_;
-
-    my $ver = $self->_property("mybatis_version");
+    my $ver = $self->_property("gwt_version");
     return $ver if $ver;
-    return DEFAULT_MYBATIS_VERSION;
+    return DEFAULT_GWT_VERSION;
 }
 
-sub set_mybatis_version {
-    my ($self, $mybatis_version) = @_;
+sub set_gwt_version {
+    my ($self, $gwt_version) = @_;
 
-    return $self->_property("mybatis_version", $mybatis_version);
+    return $self->_property("gwt_version", $gwt_version);
 }
 
+sub get_dev_gwt_module {
+
+    my $base = shift->_property("gwt_module") || "";
+    return $base . "Dev";
+}
+
+sub get_gwt_module {
+    return shift->_property("gwt_module");
+}
+
+sub set_gwt_module {
+    my ($self, $gwt_module) = @_;
+
+    return $self->_property("gwt_module", $gwt_module);
+}
 
 1;
 

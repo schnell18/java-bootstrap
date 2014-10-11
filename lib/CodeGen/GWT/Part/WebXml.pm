@@ -13,6 +13,10 @@ sub get_type {
     return SRC_TYPE_WEB;
 }
 
+sub get_web_sub_dir {
+    return "WEB-INF";
+}
+
 1;
 
 # vim: set ai nu nobk expandtab sw=4 ts=4 tw=72 syntax=perl :

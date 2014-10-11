@@ -49,6 +49,7 @@ use constant EXISTS_SKIP             => 10;
 use constant EXISTS_UPDATE           => 20;
 use constant EXISTS_OVERWRITE        => 30;
 use constant DEFAULT_MYBATIS_VERSION => "3.2.7";
+use constant DEFAULT_GWT_VERSION     => "2.6.1";
 
 require Exporter;
 our @ISA = qw(Exporter);
@@ -68,6 +69,7 @@ our @EXPORT_OK = qw(
     EXISTS_UPDATE
     EXISTS_OVERWRITE
     DEFAULT_MYBATIS_VERSION
+    DEFAULT_GWT_VERSION
     MYBATIS_GIT_IGNORE
     MYBATIS_GRADLE
     MYBATIS_MAPPER_INTERFACE
@@ -131,6 +133,7 @@ our %EXPORT_TAGS = (
         EXISTS_UPDATE
         EXISTS_OVERWRITE
         DEFAULT_MYBATIS_VERSION
+        DEFAULT_GWT_VERSION
     )],
 );
 
