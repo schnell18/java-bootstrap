@@ -3,7 +3,8 @@
 use strict;
 use warnings;
 use Getopt::Long;
-use CodeGen::GWT::Generator::GWTBoot;
+use CodeGen::GWT::Generator::GwtBoot;
+use CodeGen::Version;
 
 my $version = $CodeGen::Version::VERSION;
 my @args = @ARGV;

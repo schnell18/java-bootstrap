@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Getopt::Long;
+use CodeGen::Version;
 use CodeGen::MyBatis::Generator::MyBatis;
 
 my $version = $CodeGen::Version::VERSION;

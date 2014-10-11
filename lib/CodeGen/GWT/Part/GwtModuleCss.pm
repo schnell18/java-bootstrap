@@ -6,8 +6,17 @@ use CodeGen::Base::Part;
 
 our @ISA = qw(CodeGen::Base::Part);
 
-sub is_top_level {
-    return 1;
+sub get_sub_package {
+    my ($self) = @_;
+
+    return "public";
+}
+
+sub get_basename {
+    my ($self) = @_;
+
+    my $module_name = $self->get_parent()->get_gwt_module();
+    return "${module_name}.css";
 }
 
 1;

@@ -3,7 +3,7 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-    <display-name>[% project.module_name %]</display-name>
+    <display-name>[% project.gwt_module %]</display-name>
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

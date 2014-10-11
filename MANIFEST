@@ -14,6 +14,8 @@ lib/CodeGen/GWT/Part/GitIgnore.pm
 lib/CodeGen/GWT/Part/GitIgnore.tt2
 lib/CodeGen/GWT/Part/Gradle.pm
 lib/CodeGen/GWT/Part/Gradle.tt2
+lib/CodeGen/GWT/Part/GwtDevModuleXml.pm
+lib/CodeGen/GWT/Part/GwtDevModuleXml.tt2
 lib/CodeGen/GWT/Part/GwtHostHtml.pm
 lib/CodeGen/GWT/Part/GwtHostHtml.tt2
 lib/CodeGen/GWT/Part/GwtModuleClass.pm
@@ -22,8 +24,6 @@ lib/CodeGen/GWT/Part/GwtModuleCss.pm
 lib/CodeGen/GWT/Part/GwtModuleCss.tt2
 lib/CodeGen/GWT/Part/GwtModuleXml.pm
 lib/CodeGen/GWT/Part/GwtModuleXml.tt2
-lib/CodeGen/GWT/Part/GwtModuleXmlDev.pm
-lib/CodeGen/GWT/Part/GwtModuleXmlDev.tt2
 lib/CodeGen/GWT/Part/IndexHtml.pm
 lib/CodeGen/GWT/Part/IndexHtml.tt2
 lib/CodeGen/GWT/Part/WebXml.pm
@@ -54,6 +54,7 @@ Makefile.PL
 MANIFEST
 README.md
 t/.meta/tc1/product.lst
+t/gwt-bootstrap.t
 t/mybatis.t
 t/part_basic.t
 t/util_basic.t

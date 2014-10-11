@@ -7,6 +7,21 @@ use CodeGen::Base::Part;
 
 our @ISA = qw(CodeGen::Base::Part);
 
+sub get_basename {
+    my ($self) = @_;
+
+    my $module_name = $self->get_parent()->get_gwt_module();
+    return "${module_name}.gwt.xml";
+}
+
+sub get_type {
+    my ($self) = @_;
+
+    # Also place module xml into java directory
+    return SRC_TYPE_JAVA;
+}
+
+
 sub update {
     my ($self) = @_;
 

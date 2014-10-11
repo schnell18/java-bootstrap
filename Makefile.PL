@@ -10,7 +10,11 @@ WriteMakefile(
     ABSTRACT         => 'Framework and tools to bootstrap Java project',
     LICENSE          => 'Artistic_2_0',
     PL_FILES         => {},
-    EXE_FILES        => ['bin/mybatis-add-model.pl', 'bin/mybatis-bootstrap.pl'],
+    EXE_FILES        => [
+                         'bin/gwt-bootstrap.pl',
+                         'bin/mybatis-add-model.pl',
+                         'bin/mybatis-bootstrap.pl',
+                        ],
     MIN_PERL_VERSION => 5.006,
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => 0,

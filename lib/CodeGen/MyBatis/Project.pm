@@ -25,12 +25,10 @@ sub new {
 
     # git ignore
     $part = CodeGen::MyBatis::Part::GitIgnore->new($self);
-    $self->set_git_ignore($part);
     $self->add_part(MYBATIS_GIT_IGNORE, $part);
 
     # gradle build script
     $part = CodeGen::MyBatis::Part::Gradle->new($self);
-    $self->set_gradle($part);
     $self->add_part(MYBATIS_GRADLE, $part);
 
     # prodcution dbConfigProperties
@@ -83,26 +81,6 @@ sub set_mapper_sub_package {
     my ($self, $mapper_sub_package) = @_;
 
     return $self->_property("mapper_sub_package", $mapper_sub_package);
-}
-
-sub get_git_ignore {
-    return shift->_property("git_ignore");
-}
-
-sub set_git_ignore {
-    my ($self, $part) = @_;
-
-    return $self->_property("git_ignore", $part);
-}
-
-sub get_gradle {
-    return shift->_property("gradle");
-}
-
-sub set_gradle {
-    my ($self, $part) = @_;
-
-    return $self->_property("gradle", $part);
 }
 
 sub get_mybatis_version {

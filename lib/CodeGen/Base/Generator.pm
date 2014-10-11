@@ -14,11 +14,10 @@ sub get_instance {
     my $config = shift;
     return undef unless $config && ref($config) eq 'HASH';
 
-    my $include_path   = get_template_include_dir(),
-    my $bootstrap      = $config->{bootstrap};
-    my $output_path    = $config->{base_dir};
-    if ($bootstrap) {
-        my $project_dir = $config->{project_dir};
+    my $include_path = get_template_include_dir(),
+    my $project_dir  = $config->{project_dir};
+    my $output_path  = $config->{base_dir};
+    if ($project_dir) {
         $output_path = catdir($output_path, $project_dir);
     }
 

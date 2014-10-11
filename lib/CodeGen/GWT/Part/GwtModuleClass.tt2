@@ -1,5 +1,4 @@
-[%- SET attributes = comp.attributes -%]
-[%- SET module_class  = project.get_part("module_class") -%]
+[%- SET module_class  = project.get_part("gwt_module_class") -%]
 package [% module_class.package_name %];
 
 import com.google.gwt.core.client.EntryPoint;
