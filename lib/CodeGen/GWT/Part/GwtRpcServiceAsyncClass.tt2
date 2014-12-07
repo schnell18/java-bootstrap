@@ -1,0 +1,8 @@
+[%- SET async  = comp.get_part("gwt_rpc_service_async_class") -%]
+package [% comp.service_async_interface_package %];
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
+public interface [% async.class_name %] {
+    void yourMethod(String yourArg, AsyncCallback<String> callback);
+}

@@ -31,15 +31,18 @@ use constant MYBATIS_DB_CONFIG_PROPERTIES    => "db_config_properties";
 use constant MYBATIS_DB_CONFIG_PROPERTIES_UT => "db_config_properties_ut";
 
 # GWT part names
-use constant GWT_GIT_IGNORE     => "gwt_git_ignore";
-use constant GWT_GRADLE         => "gwt_gradle";
-use constant GWT_HOST_HTML      => "gwt_host_html";
-use constant GWT_INDEX_HTML     => "gwt_index_html";
-use constant GWT_MODULE_CLASS   => "gwt_module_class";
-use constant GWT_MODULE_CSS     => "gwt_module_css";
-use constant GWT_MODULE_XML     => "gwt_module_xml";
-use constant GWT_MODULE_XML_DEV => "gwt_module_xml_dev";
-use constant GWT_WEB_XML        => "gwt_web_xml";
+use constant GWT_GIT_IGNORE              => "gwt_git_ignore";
+use constant GWT_GRADLE                  => "gwt_gradle";
+use constant GWT_HOST_HTML               => "gwt_host_html";
+use constant GWT_INDEX_HTML              => "gwt_index_html";
+use constant GWT_MODULE_CLASS            => "gwt_module_class";
+use constant GWT_MODULE_CSS              => "gwt_module_css";
+use constant GWT_MODULE_XML              => "gwt_module_xml";
+use constant GWT_MODULE_XML_DEV          => "gwt_module_xml_dev";
+use constant GWT_WEB_XML                 => "gwt_web_xml";
+use constant GWT_RPC_SERVICE_CLASS       => "gwt_rpc_service_class";
+use constant GWT_RPC_SERVICE_ASYNC_CLASS => "gwt_rpc_service_async_class";
+use constant GWT_RPC_SERVICE_IMPL_CLASS  => "gwt_rpc_service_impl_class";
 
 # operation error
 use constant ERR_TT_FAILURE       => 400;
@@ -89,6 +92,9 @@ our @EXPORT_OK = qw(
     GWT_MODULE_XML
     GWT_MODULE_XML_DEV
     GWT_WEB_XML
+    GWT_RPC_SERVICE_CLASS
+    GWT_RPC_SERVICE_ASYNC_CLASS
+    GWT_RPC_SERVICE_IMPL_CLASS
 );
 
 our %EXPORT_TAGS = (
@@ -127,6 +133,9 @@ our %EXPORT_TAGS = (
         GWT_MODULE_XML
         GWT_MODULE_XML_DEV
         GWT_WEB_XML
+        GWT_RPC_SERVICE_CLASS
+        GWT_RPC_SERVICE_ASYNC_CLASS
+        GWT_RPC_SERVICE_IMPL_CLASS
     )],
     misc => [qw(
         EXISTS_SKIP

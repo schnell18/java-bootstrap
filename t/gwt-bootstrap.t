@@ -11,10 +11,10 @@ BEGIN {
     if (-d 't') {
         # running from the base directory
         unshift @INC, 'lib'
-    }   
+    }
     else {
         unshift @INC, '../lib';
-    }   
+    }
 }
 
 use CodeGen::Constants qw(:all);

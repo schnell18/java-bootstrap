@@ -1,0 +1,15 @@
+[%- SET interface  = comp.get_part("gwt_rpc_service_class") -%]
+[%- SET impl  = comp.get_part("gwt_rpc_service_impl_class") -%]
+package [% comp.service_impl_package %];
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import [% interface.q_class_name %];
+
+public class [% impl.class_name %] extends RemoteServiceServlet
+implements [% interface.class_name %] {
+
+    @Override
+    public void yourMethod(String yourArg) {
+        //TODO: implement service method here
+    }
+}
