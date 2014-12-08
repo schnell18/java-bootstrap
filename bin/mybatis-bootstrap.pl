@@ -16,6 +16,7 @@ my (
     $mapper_sub_package,
     $entity_spec_file,
     $help,
+    $no_spring,
     $mybatis_version
 );
 GetOptions(
@@ -26,6 +27,7 @@ GetOptions(
     "spec-file=s"       => \$entity_spec_file,
     "mybatis-version=s" => \$mybatis_version,
     "help"              => \$help,
+    "no-spring"         => \$no_spring,
 ) or do {
     usage();
     exit(1);
@@ -53,6 +55,7 @@ my $mybatis = CodeGen::MyBatis::Generator::MyBatis->get_instance({
     base_dir           => '.',
     spec_file          => $entity_spec_file,
     bootstrap          => 1,
+    no_spring          => $no_spring,
     project_dir        => $project_dir,
     root_package       => $root_package,
     model_sub_package  => $model_sub_package,
@@ -79,6 +82,7 @@ Usage:
                        [--model-sub-pkg <sub package for model>]
                        [--mapper-sub-pkg <sub package for mapper>]
                        [--spec-file <entity attributes>]
+                       [--no-spring]
                        [--mybatis-version <MyBatis version to use>]
                        [--help]
 Options:
@@ -87,6 +91,7 @@ Options:
   --model-sub-pkg   sub package of model class(default model)
   --mapper-sub-pkg  sub package of mapper class(default mapper)
   --spec-file       attributes and types of the entity
+  --no-spring       do not create spring app context
   --mybatis-version MyBatis version to use(default 3.2.7)
   --help            show this help message
 EOF

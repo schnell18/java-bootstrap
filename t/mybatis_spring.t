@@ -11,10 +11,10 @@ BEGIN {
     if (-d 't') {
         # running from the base directory
         unshift @INC, 'lib'
-    }   
+    }
     else {
         unshift @INC, '../lib';
-    }   
+    }
 }
 
 use CodeGen::Constants qw(:all);
@@ -38,8 +38,8 @@ my @files = qw(
     build.gradle
     src/main/resources/org/abc/ibatis/dbConfig.properties
     src/test/resources/org/abc/ibatis/dbConfig_ut.properties
-    src/main/resources/org/abc/ibatis/mybatisConfig.xml
-    src/test/resources/org/abc/ibatis/mybatisConfig_ut.xml
+    src/main/resources/org/abc/ibatis/app-ctx.xml
+    src/test/resources/org/abc/ibatis/app-ctx_ut.xml
 );
 
 my $exp_gen_files = [];
@@ -80,23 +80,12 @@ my @version_files = qw(
     src/test/java/org/abc/ibatis/server/mapper/VersionMapperTest.java
 );
 
-my @mod_files = qw(
-    src/main/resources/org/abc/ibatis/mybatisConfig.xml
-    src/test/resources/org/abc/ibatis/mybatisConfig_ut.xml
-);
-
 $exp_gen_files = [];
 foreach my $f (@product_files) {
     push @$exp_gen_files, ['A', $f];
 }
-foreach my $f (@mod_files) {
-    push @$exp_gen_files, ['M', $f];
-}
 foreach my $f (@version_files) {
     push @$exp_gen_files, ['A', $f];
-}
-foreach my $f (@mod_files) {
-    push @$exp_gen_files, ['M', $f];
 }
 
 $mybatis = CodeGen::MyBatis::Generator::MyBatis->get_instance({
@@ -110,7 +99,7 @@ $mybatis->generate();
 $act_gen_files = $mybatis->get_generated_list();
 cmp_set($act_gen_files, $exp_gen_files, "Generated file list test");
 
-foreach my $f (@product_files, @version_files, @mod_files) {
+foreach my $f (@product_files, @version_files) {
     my $fp = catfile($base_dir, $project_dir, $f);
     ok(-f $fp, "Generated file existence test for $f");
 }

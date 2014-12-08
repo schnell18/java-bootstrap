@@ -29,6 +29,8 @@ use constant MYBATIS_MYBATIS_CONFIG_XML      => "mybatis_config_xml";
 use constant MYBATIS_MYBATIS_CONFIG_XML_UT   => "mybatis_config_xml_ut";
 use constant MYBATIS_DB_CONFIG_PROPERTIES    => "db_config_properties";
 use constant MYBATIS_DB_CONFIG_PROPERTIES_UT => "db_config_properties_ut";
+use constant MYBATIS_SPRING_APP_CTX_XML      => "spring_app_context";
+use constant MYBATIS_SPRING_APP_CTX_XML_UT   => "spring_app_context_ut";
 
 # GWT part names
 use constant GWT_GIT_IGNORE     => "gwt_git_ignore";
@@ -80,6 +82,8 @@ our @EXPORT_OK = qw(
     MYBATIS_MYBATIS_CONFIG_XML_UT
     MYBATIS_DB_CONFIG_PROPERTIES
     MYBATIS_DB_CONFIG_PROPERTIES_UT
+    MYBATIS_SPRING_APP_CTX_XML
+    MYBATIS_SPRING_APP_CTX_XML_UT
     GWT_GIT_IGNORE
     GWT_GRADLE
     GWT_HOST_HTML
@@ -118,6 +122,8 @@ our %EXPORT_TAGS = (
         MYBATIS_MYBATIS_CONFIG_XML_UT
         MYBATIS_DB_CONFIG_PROPERTIES
         MYBATIS_DB_CONFIG_PROPERTIES_UT
+        MYBATIS_SPRING_APP_CTX_XML
+        MYBATIS_SPRING_APP_CTX_XML_UT
         GWT_GIT_IGNORE
         GWT_GRADLE
         GWT_HOST_HTML

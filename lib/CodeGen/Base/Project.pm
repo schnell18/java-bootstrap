@@ -132,16 +132,16 @@ sub get_directory_by_purpose_and_type {
 }
 
 sub _property {
-    my ($self, $attr, $value) = @_; 
+    my ($self, $attr, $value) = @_;
 
     if (defined($value)) {
         my $old_value = $self->{$attr};
         $self->{$attr} = $value;
         return $old_value;
-    }   
+    }
     else {
         return $self->{$attr};
-    }   
+    }
 }
 
 1;

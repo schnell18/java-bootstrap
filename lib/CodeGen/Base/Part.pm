@@ -102,12 +102,21 @@ sub q_class_name {
     );
 }
 
-sub classpath_entry {
+sub classpath_base {
     my ($self) = @_;
 
     return catdir(
         $self->get_root_pkg_path(),
-        $self->get_sub_pkg_path(),
+        $self->get_sub_pkg_path()
+    );
+
+}
+
+sub classpath_entry {
+    my ($self) = @_;
+
+    return catdir(
+        $self->classpath_base(),
         $self->get_basename()
     );
 
@@ -312,8 +321,7 @@ sub get_default_basename {
     # - *Xml -> *.xml
     # - *Properties -> *.properties
     # - otherwise, no default base name is assigned
-    my $suffix = $self->get_suffix();
-    $suffix = "" unless $suffix;
+    my $suffix = $self->get_suffix() || "";
     my $base_name = $self->_get_class_base_name();
     if ($base_name eq "Gradle") {
         return "build${suffix}.gradle";

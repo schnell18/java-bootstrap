@@ -1,3 +1,7 @@
+[% PERL -%]
+   my $project = $stash->get('project');
+   $stash->set('with_spring', defined($project->get_no_spring()) ? 0 : 1 );
+[% END -%]
 apply plugin: 'java'
 apply plugin: 'idea'
 
@@ -7,6 +11,12 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.11'
+    [%- IF with_spring %]
+    testCompile 'org.springframework:spring-test:3.2.12.RELEASE'
+    compile 'org.mybatis:mybatis-spring:1.2.2'
+    compile 'org.springframework:spring-context:3.2.12.RELEASE'
+    compile 'org.springframework:spring-jdbc:3.2.12.RELEASE'
+    [%- END %]
     compile 'org.mybatis:mybatis:[% project.mybatis_version %]'
     runtime 'org.xerial:sqlite-jdbc:3.7.2'
 }

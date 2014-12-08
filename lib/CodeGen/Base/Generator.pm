@@ -153,10 +153,10 @@ sub _generate_part {
     my $action = $part->get_exists_action();
     if (-f $fp && $action == EXISTS_UPDATE) {
         return $part->update();
-    }   
+    }
     elsif (-f $fp && $action == EXISTS_SKIP) {
         return RESULT_SKIP_EXISTING;
-    }   
+    }
 
     # stash current part to make it available to template
     $stash->{part} = $part;
@@ -171,16 +171,16 @@ sub _generate_part {
 }
 
 sub _property {
-    my ($self, $attr, $value) = @_; 
+    my ($self, $attr, $value) = @_;
 
     if (defined($value)) {
         my $old_value = $self->{$attr};
         $self->{$attr} = $value;
         return $old_value;
-    }   
+    }
     else {
         return $self->{$attr};
-    }   
+    }
 }
 
 1;

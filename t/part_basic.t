@@ -8,10 +8,10 @@ BEGIN {
     if (-d 't') {
         # running from the base directory
         unshift @INC, 'lib'
-    }   
+    }
     else {
         unshift @INC, '../lib';
-    }   
+    }
 }
 
 use CodeGen::Constants qw(:all);
@@ -27,7 +27,7 @@ my $model_sub_pkg_dir  = $model_sub_pkg;
 my $mapper_sub_pkg_dir = $mapper_sub_pkg;
 my $entity_name        = "Product";
 my $attrs              = [ ];
-my $project            = CodeGen::MyBatis::Project->new();
+my $project            = CodeGen::MyBatis::Project->new(1);
 
 # convert package to directory
 $root_pkg_dir =~ s|\.|/|g;

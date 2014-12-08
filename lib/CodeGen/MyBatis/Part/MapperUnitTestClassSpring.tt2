@@ -1,0 +1,74 @@
+[%- SET attributes = comp.attributes -%]
+[%- SET mapper     = comp.get_part("mapper_interface") -%]
+[%- SET mapper_ut  = comp.get_part("mapper_unit_test_class") -%]
+[%- SET model      = comp.get_part("model_class") -%]
+[%- SET app_ctx    = project.get_part("spring_app_context_ut") -%]
+package [% mapper_ut.package_name %];
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import [% model.q_class_name %];
+
+import javax.annotation.Resource;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+[% PERL -%]
+   my $attributes = $stash->get('attributes');
+   my @dates = grep { $_->[1] eq 'Date' } @$attributes;
+   $stash->set('hasDate', scalar(@dates));
+[% END -%]
+[% IF hasDate -%]
+import java.util.Date;
+[% END -%]
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:[% app_ctx.classpath_entry %]")
+public class [% mapper_ut.class_name %] {
+
+    @Resource
+    private [% mapper.class_name %] [% mapper.class_name.lcfirst %];
+
+    @Test
+    public void testSelect[% comp.name %]ById () {
+[% FOREACH a IN attributes -%]
+    [%- SET type = a.1 -%]
+    [%- SET attr = a.0 -%]
+    [%- IF type == 'String' -%]
+        [% type %] exp[% attr.ucfirst %] = ""; //TODO: fix here
+
+    [%- ELSIF type == 'Long' -%]
+        [% type %] exp[% attr.ucfirst %] = 100L; //TODO: fix here
+
+    [%- ELSIF type == 'int' -%]
+        [% type %] exp[% attr.ucfirst %] = 1000; //TODO: fix here
+
+    [%- ELSIF type == 'boolean' -%]
+        [% type %] exp[% attr.ucfirst %] = true; //TODO: fix here
+
+    [%- ELSIF type == 'Date' -%]
+        [% type %] exp[% attr.ucfirst %] = new Date(); //TODO: fix here
+
+    [%- ELSE -%]
+    [%- END -%]
+[% END -%]
+
+        [% model.class_name %] [% model.class_name.lcfirst %] = [% mapper.class_name.lcfirst %].select[% model.class_name %](100L);
+
+[% FOREACH a IN attributes -%]
+    [%- SET attr = a.0 -%]
+    [%- SET type = a.1 -%]
+    [%- IF type != 'boolean' -%]
+        [%- SET accessor = 'get' -%]
+    [%- ELSE -%]
+        [%- SET accessor = 'is' -%]
+    [%- END -%]
+        assertEquals("Property [% attr %] test", exp[% attr.ucfirst %], [% model.class_name.lcfirst %].[% accessor %][% attr.ucfirst %]());
+[% END -%]
+
+    }
+}

@@ -19,7 +19,7 @@ sub new {
 
     my (undef, $name) = @_;
     my $self = $class->SUPER::new(@_);
-    
+
     my $part;
 
     # model class
@@ -44,24 +44,31 @@ sub new {
     $self->set_mapper_xml($part);
     $self->add_part(MYBATIS_MAPPER_XML, $part);
 
+    # get if spring integration is disabled
+    my $no_spring = $self->get_project()->get_no_spring();
     # mapper unit test
     $part = CodeGen::MyBatis::Part::MapperUnitTestClass->new($self);
+    $part->set_no_spring($no_spring);
     $part->set_sub_package($self->get_mapper_sub_package());
     $part->set_basename("${name}MapperTest.java");
     $self->set_mapper_unit_test_class($part);
     $self->add_part(MYBATIS_MAPPER_UNIT_TEST_CLASS, $part);
 
-    # production mybatis config
-    $part = CodeGen::MyBatis::Part::MybatisConfigXml->new($self);
-    $part->set_exists_action(EXISTS_UPDATE);
-    $self->add_part(MYBATIS_MYBATIS_CONFIG_XML, $part);
+    # with spring integration typeAlias and mapper xml inclusion
+    # is no longer necessary
+    if ($no_spring) {
+        # production mybatis config
+        $part = CodeGen::MyBatis::Part::MybatisConfigXml->new($self);
+        $part->set_exists_action(EXISTS_UPDATE);
+        $self->add_part(MYBATIS_MYBATIS_CONFIG_XML, $part);
 
-    # unit test mybatis config
-    $part = CodeGen::MyBatis::Part::MybatisConfigXml->new($self);
-    $part->set_exists_action(EXISTS_UPDATE);
-    $part->set_suffix('_ut');
-    $part->set_purpose('test');
-    $self->add_part(MYBATIS_MYBATIS_CONFIG_XML_UT, $part);
+        # unit test mybatis config
+        $part = CodeGen::MyBatis::Part::MybatisConfigXml->new($self);
+        $part->set_exists_action(EXISTS_UPDATE);
+        $part->set_suffix('_ut');
+        $part->set_purpose('test');
+        $self->add_part(MYBATIS_MYBATIS_CONFIG_XML_UT, $part);
+    }
 
     return $self;
 }
@@ -70,12 +77,12 @@ sub new {
 sub get_mapper_sub_pkg_path {
     my ($self) = @_;
 
-    my $dir = $self->_property("mapper_sub_pkg_path"); 
+    my $dir = $self->_property("mapper_sub_pkg_path");
     return $dir if $dir;
 
-    my $sub_pkg = $self->get_mapper_sub_package(); 
+    my $sub_pkg = $self->get_mapper_sub_package();
     $sub_pkg =~ s|\.|/|g;
-    $self->_property("mapper_sub_pkg_path", $sub_pkg); 
+    $self->_property("mapper_sub_pkg_path", $sub_pkg);
     return $sub_pkg;
 }
 
@@ -83,12 +90,12 @@ sub get_mapper_sub_pkg_path {
 sub get_model_sub_pkg_path {
     my ($self) = @_;
 
-    my $dir = $self->_property("model_sub_pkg_path"); 
+    my $dir = $self->_property("model_sub_pkg_path");
     return $dir if $dir;
 
-    my $sub_pkg = $self->get_model_sub_package(); 
+    my $sub_pkg = $self->get_model_sub_package();
     $sub_pkg =~ s|\.|/|g;
-    $self->_property("model_sub_pkg_path", $sub_pkg); 
+    $self->_property("model_sub_pkg_path", $sub_pkg);
     return $sub_pkg;
 }
 

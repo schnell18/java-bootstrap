@@ -1,0 +1,39 @@
+[%- SET purpose = part.get_purpose() -%]
+[%- IF purpose == "test" -%]
+    [%- SET db_conf = project.get_part('db_config_properties_ut') -%]
+[%- ELSE -%]
+    [%- SET db_conf = project.get_part('db_config_properties') -%]
+[%- END -%]
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        ">
+    <context:component-scan base-package="[% project.root_package %]"/>
+    <context:property-placeholder location="classpath:[% db_conf.classpath_entry %]"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:[% project.mapper_pkg_path %]/*.xml"/>
+        <property name="typeAliasesPackage" value="[% project.model_package %]"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="[% project.mapper_package %]"/>
+    </bean>
+</beans>

@@ -23,6 +23,7 @@ sub get_instance {
     my $self = $class->SUPER::get_instance(@_);
 
     my $for_bootstrap      = $config->{bootstrap};
+    my $no_spring          = $config->{no_spring};
     my $spec_file          = $config->{spec_file};
     my $mybatis_ver        = $config->{mybatis_ver};
     my $root_package       = $config->{root_package};
@@ -42,6 +43,7 @@ sub get_instance {
         $self->set_project_dir($project_dir);
     }
 
+    $self->set_no_spring($no_spring);
     $self->set_entity_spec_file($spec_file);
     $self->set_mapper_sub_package($mapper_sub_package);
     $self->set_model_sub_package($model_sub_package);
@@ -60,7 +62,7 @@ sub pre_generate {
         $root_pkg_path =~ s|\.|/|g;
     }
     else {
-        my $file_pat = qr{mybatisConfig\.xml$|mybatisConfig-ut.xml$};
+        my $file_pat = qr{mybatisConfig\.xml$|app-ctx_ut.xml$};
         (undef, $root_pkg_path) = find_classpath_resource(
             $self->get_base_dir(),
             $file_pat
@@ -69,7 +71,7 @@ sub pre_generate {
         $root_package =~ s|/|.|g;
     }
     # build the Project and Component objects
-    my $project = CodeGen::MyBatis::Project->new();
+    my $project = CodeGen::MyBatis::Project->new($self->get_no_spring());
     $project->set_mybatis_version($self->get_mybatis_ver());
     $project->set_root_package($root_package);
     $project->set_model_sub_package($self->get_model_sub_package());
@@ -103,6 +105,16 @@ sub set_entity_spec_file {
     my ($self, $entity_spec_file) = @_;
 
     return $self->_property("entity_spec_file", $entity_spec_file);
+}
+
+sub get_no_spring {
+    return shift->_property("no_spring");
+}
+
+sub set_no_spring {
+    my ($self, $no_spring) = @_;
+
+    return $self->_property("no_spring", $no_spring);
 }
 
 sub is_bootstrap {
